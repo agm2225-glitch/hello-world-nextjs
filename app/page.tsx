@@ -1,7 +1,7 @@
-import { supabase } from '@/lib/supabase';
+import { createClient } from '@/lib/supabase/server';
+import { redirect } from 'next/navigation';
 
-// Disable caching so Supabase data updates immediately on refresh
-export const revalidate = 0;
+export const dynamic = 'force-dynamic';
 
 interface RecordItem {
   id: number;
@@ -10,6 +10,16 @@ interface RecordItem {
 }
 
 export default async function Home() {
+  const supabase = await createClient();
+
+  // Check if a user is currently logged in
+  const { data: { user } } = await supabase.auth.getUser();
+
+  // If not logged in, redirect straight to the login page
+  if (!user) {
+    redirect('/login');
+  }
+
   // Querying the 'Facts' table
   const { data: items, error } = await supabase
     .from('Facts')
@@ -34,7 +44,7 @@ export default async function Home() {
             Bizarre World Records
           </h1>
           <p className="text-slate-400 text-sm">
-            Live dataset fetched from Supabase
+            Live dataset fetched from Supabase • Logged in as {user.email}
           </p>
         </header>
 
