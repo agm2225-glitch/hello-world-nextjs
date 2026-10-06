@@ -1,73 +1,73 @@
-import { createClient } from '@/lib/supabase/server';
-import { redirect } from 'next/navigation';
-
-export const dynamic = 'force-dynamic';
-
-interface RecordItem {
-  id: number;
-  title: string;
-  description: string;
-}
+import Link from "next/link";
+import { createClient } from "@/lib/supabase/server";
+import UploadForm from "@/components/UploadForm";
+import CaptionCard from "@/components/CaptionCard";
 
 export default async function Home() {
   const supabase = await createClient();
 
-  // Check if a user is currently logged in
-  const { data: { user } } = await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
-  // If not logged in, redirect straight to the login page
-  if (!user) {
-    redirect('/login');
-  }
+  const { data: captions } = await supabase
+    .from("captions")
+    .select("*")
+    .order("created_at", { ascending: false });
 
-  // Querying the 'Facts' table
-  const { data: items, error } = await supabase
-    .from('Facts')
-    .select('id, title, description');
+  const { data: votes } = await supabase.from("votes").select("*");
 
-  if (error) {
-    return (
-      <main className="min-h-screen bg-slate-950 text-white p-8 flex justify-center items-center">
-        <div className="max-w-md w-full rounded-xl bg-red-950/60 border border-red-500/30 p-6">
-          <h1 className="text-lg font-semibold text-red-400 mb-1">Error Loading Data</h1>
-          <p className="text-sm text-red-200">{error.message}</p>
-        </div>
-      </main>
-    );
-  }
+  const captionsWithVotes = (captions ?? []).map((c) => {
+    const relatedVotes = (votes ?? []).filter((v) => v.caption_id === c.id);
+    return {
+      ...c,
+      upvotes: relatedVotes.filter((v) => v.vote_type === "up").length,
+      downvotes: relatedVotes.filter((v) => v.vote_type === "down").length,
+    };
+  });
 
   return (
-    <main className="min-h-screen bg-slate-950 text-slate-100 p-6 md:p-12">
-      <div className="max-w-3xl mx-auto">
-        <header className="mb-8 border-b border-slate-800 pb-6">
-          <h1 className="text-3xl font-extrabold tracking-tight text-white mb-2">
-            Bizarre World Records
-          </h1>
-          <p className="text-slate-400 text-sm">
-            Live dataset fetched from Supabase • Logged in as {user.email}
-          </p>
-        </header>
+    <main className="flex-1 w-full max-w-5xl mx-auto px-6 py-12">
+      <header className="mb-12 flex flex-col items-center text-center">
+        <h1 className="font-[family-name:var(--font-display)] text-5xl sm:text-6xl text-[#FFD23F] -rotate-2 leading-none">
+          Caption Rater
+        </h1>
+        <p className="mt-4 max-w-md text-[#C7D6E8]">
+          Upload a photo from campus. An AI writes a caption. You decide if it&apos;s actually funny.
+        </p>
 
-        <div className="grid gap-4">
-          {items && items.length > 0 ? (
-            items.map((item: RecordItem) => (
-              <div
-                key={item.id}
-                className="rounded-xl border border-slate-800 bg-slate-900/80 p-5 shadow-sm hover:border-slate-700 transition"
-              >
-                <h2 className="text-lg font-bold text-slate-100 mb-1">
-                  {item.title}
-                </h2>
-                <p className="text-slate-400 text-sm leading-relaxed">
-                  {item.description}
-                </p>
-              </div>
-            ))
-          ) : (
-            <p className="text-slate-500">No records found in database.</p>
-          )}
+        {!user && (
+          <Link
+            href="/login"
+            className="mt-6 inline-block rounded-full bg-[#FF5C8A] px-6 py-3 text-sm font-semibold text-[#0F1B2D] hover:bg-[#ff7a9e] transition-colors"
+          >
+            Sign in with Google to upload
+          </Link>
+        )}
+      </header>
+
+      {user && <UploadForm />}
+
+      {captionsWithVotes.length === 0 ? (
+        <p className="text-center text-[#7E93AE] mt-16">
+          No captions yet. Be the first to upload a photo.
+        </p>
+      ) : (
+        <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+          {captionsWithVotes.map((c, i) => (
+            <CaptionCard
+              key={c.id}
+              id={c.id}
+              imageUrl={c.image_url}
+              captionText={c.caption_text}
+              upvotes={c.upvotes}
+              downvotes={c.downvotes}
+              isLoggedIn={!!user}
+              rotate={i % 2 === 0 ? -2 : 2}
+            />
+          ))}
         </div>
-      </div>
+      )}
     </main>
   );
 }

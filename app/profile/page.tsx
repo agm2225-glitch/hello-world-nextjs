@@ -54,7 +54,7 @@ export default function ProfilePage() {
       alert('Error updating profile!');
     } else {
       alert('Profile updated successfully!');
-      router.push('/'); // Sends user to the home facts page
+      router.push('/');
     }
   };
 
@@ -82,68 +82,75 @@ export default function ProfilePage() {
     }
   };
 
-  if (loading) return <p style={{ padding: '20px' }}>Loading profile...</p>;
+  if (loading) {
+    return (
+      <main className="flex-1 flex items-center justify-center">
+        <p className="text-[#C7D6E8]">Loading profile...</p>
+      </main>
+    );
+  }
 
   const isMissingName = !firstName.trim() || !lastName.trim();
 
   return (
-    <div style={{ padding: '20px', maxWidth: '450px', margin: '0 auto' }}>
-      <h1>User Profile</h1>
+    <main className="flex-1 max-w-md mx-auto px-6 py-12">
+      <h1 className="font-[family-name:var(--font-display)] text-4xl text-[#FFD23F] -rotate-2">
+        Your profile
+      </h1>
 
       {isMissingName && (
-        <div
-          style={{
-            background: '#fff3cd',
-            color: '#856404',
-            padding: '12px',
-            borderRadius: '6px',
-            marginBottom: '15px',
-          }}
-        >
-          ⚠️ Please complete your <strong>First Name</strong> and <strong>Last Name</strong> to complete your profile.
+        <div className="mt-6 rounded-md border border-[#FFD23F]/40 bg-[#FFD23F]/10 px-4 py-3 text-sm text-[#FFD23F]">
+          Add your first and last name to finish setting up your profile.
         </div>
       )}
 
       {avatarUrl && (
-        <div style={{ marginBottom: '15px' }}>
-          <img
-            src={avatarUrl}
-            alt="Profile Avatar"
-            width={120}
-            height={120}
-            style={{ borderRadius: '50%', objectFit: 'cover' }}
-          />
-        </div>
+        <img
+          src={avatarUrl}
+          alt="Profile avatar"
+          width={120}
+          height={120}
+          className="mt-6 h-28 w-28 rounded-full object-cover border-2 border-[#2E4260]"
+        />
       )}
 
-      <div style={{ marginBottom: '15px' }}>
-        <label style={{ display: 'block', marginBottom: '5px' }}>Profile Photo:</label>
-        <input type="file" accept="image/*" onChange={uploadAvatar} disabled={uploading} />
+      <div className="mt-6">
+        <label className="block text-sm text-[#C7D6E8] mb-2">Profile photo</label>
+        <input
+          type="file"
+          accept="image/*"
+          onChange={uploadAvatar}
+          disabled={uploading}
+          className="text-sm text-[#C7D6E8] file:mr-4 file:rounded-full file:border-0 file:bg-[#2E4260] file:px-4 file:py-2 file:text-sm file:text-[#F5F3EE]"
+        />
       </div>
 
-      <div style={{ marginBottom: '15px' }}>
-        <label style={{ display: 'block', marginBottom: '5px' }}>First Name:</label>
+      <div className="mt-5">
+        <label className="block text-sm text-[#C7D6E8] mb-2">First name</label>
         <input
           type="text"
           value={firstName}
           onChange={(e) => setFirstName(e.target.value)}
-          style={{ width: '100%', padding: '8px', boxSizing: 'border-box' }}
+          className="w-full rounded-md border border-[#2E4260] bg-[#16243A] px-3 py-2 text-[#F5F3EE] focus:outline-none focus:border-[#9BCBEB]"
         />
       </div>
 
-      <div style={{ marginBottom: '15px' }}>
-        <label style={{ display: 'block', marginBottom: '5px' }}>Last Name:</label>
+      <div className="mt-5">
+        <label className="block text-sm text-[#C7D6E8] mb-2">Last name</label>
         <input
           type="text"
           value={lastName}
           onChange={(e) => setLastName(e.target.value)}
-          style={{ width: '100%', padding: '8px', boxSizing: 'border-box' }}
+          className="w-full rounded-md border border-[#2E4260] bg-[#16243A] px-3 py-2 text-[#F5F3EE] focus:outline-none focus:border-[#9BCBEB]"
         />
       </div>
 
-      <button onClick={updateProfile} style={{ padding: '10px 20px', cursor: 'pointer' }}>
-        Save Profile
+      <button
+        onClick={updateProfile}
+        className="mt-8 rounded-full bg-[#FF5C8A] px-6 py-2.5 text-sm font-semibold text-[#0F1B2D] hover:bg-[#ff7a9e] transition-colors"
+      >
+        Save profile
       </button>
-    </div>
+    </main>
   );
 }
