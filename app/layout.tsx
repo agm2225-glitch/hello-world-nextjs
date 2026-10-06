@@ -1,17 +1,12 @@
 import type { Metadata } from "next";
-import { Archivo_Black, Inter } from "next/font/google";
+import { Caveat } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 
-const archivoBlack = Archivo_Black({
-  variable: "--font-display",
+const caveat = Caveat({
+  variable: "--font-handwritten",
   subsets: ["latin"],
-  weight: "400",
-});
-
-const inter = Inter({
-  variable: "--font-body",
-  subsets: ["latin"],
+  weight: ["500", "700"],
 });
 
 export const metadata: Metadata = {
@@ -21,11 +16,11 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html
-      lang="en"
-      className={`${archivoBlack.variable} ${inter.variable} h-full antialiased`}
-    >
-      <body className="min-h-full flex flex-col bg-[#0F1B2D] text-[#F5F3EE] font-[family-name:var(--font-body)]">
+    <html lang="en" className={`${caveat.variable} h-full antialiased`}>
+      <body
+        className="min-h-full flex flex-col bg-[#E8E2D5] text-[#2C3E50]"
+        style={{ fontFamily: "Arial, Helvetica, sans-serif" }}
+      >
         <Header />
         {children}
       </body>

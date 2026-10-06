@@ -85,7 +85,7 @@ export default function ProfilePage() {
   if (loading) {
     return (
       <main className="flex-1 flex items-center justify-center">
-        <p className="text-[#C7D6E8]">Loading profile...</p>
+        <p className="text-[#6B7280]">Loading personnel file...</p>
       </main>
     );
   }
@@ -94,13 +94,12 @@ export default function ProfilePage() {
 
   return (
     <main className="flex-1 max-w-md mx-auto px-6 py-12">
-      <h1 className="font-[family-name:var(--font-display)] text-4xl text-[#FFD23F] -rotate-2">
-        Your profile
-      </h1>
+      <p className="text-xs uppercase tracking-widest text-[#9CA3AF] mb-2">Human Resources</p>
+      <h1 className="text-3xl font-bold text-[#2C3E50]">Personnel File</h1>
 
       {isMissingName && (
-        <div className="mt-6 rounded-md border border-[#FFD23F]/40 bg-[#FFD23F]/10 px-4 py-3 text-sm text-[#FFD23F]">
-          Add your first and last name to finish setting up your profile.
+        <div className="mt-6 border-l-4 border-[#FFE135] bg-[#FFE135]/20 px-4 py-3 text-sm text-[#2C3E50]">
+          Please complete your first and last name for HR records.
         </div>
       )}
 
@@ -110,46 +109,46 @@ export default function ProfilePage() {
           alt="Profile avatar"
           width={120}
           height={120}
-          className="mt-6 h-28 w-28 rounded-full object-cover border-2 border-[#2E4260]"
+          className="mt-6 h-28 w-28 object-cover border-2 border-[#2C3E50] grayscale-[10%]"
         />
       )}
 
       <div className="mt-6">
-        <label className="block text-sm text-[#C7D6E8] mb-2">Profile photo</label>
+        <label className="block text-sm text-[#6B7280] mb-2">Employee Photo</label>
         <input
           type="file"
           accept="image/*"
           onChange={uploadAvatar}
           disabled={uploading}
-          className="text-sm text-[#C7D6E8] file:mr-4 file:rounded-full file:border-0 file:bg-[#2E4260] file:px-4 file:py-2 file:text-sm file:text-[#F5F3EE]"
+          className="text-sm text-[#6B7280] file:mr-4 file:rounded-sm file:border file:border-[#2C3E50] file:bg-[#F4F4F0] file:px-4 file:py-2 file:text-sm file:text-[#2C3E50]"
         />
       </div>
 
       <div className="mt-5">
-        <label className="block text-sm text-[#C7D6E8] mb-2">First name</label>
+        <label className="block text-sm text-[#6B7280] mb-2">First Name</label>
         <input
           type="text"
           value={firstName}
           onChange={(e) => setFirstName(e.target.value)}
-          className="w-full rounded-md border border-[#2E4260] bg-[#16243A] px-3 py-2 text-[#F5F3EE] focus:outline-none focus:border-[#9BCBEB]"
+          className="w-full border border-[#D8D2C2] bg-[#F4F4F0] px-3 py-2 text-[#2C3E50] focus:outline-none focus:border-[#2C3E50]"
         />
       </div>
 
       <div className="mt-5">
-        <label className="block text-sm text-[#C7D6E8] mb-2">Last name</label>
+        <label className="block text-sm text-[#6B7280] mb-2">Last Name</label>
         <input
           type="text"
           value={lastName}
           onChange={(e) => setLastName(e.target.value)}
-          className="w-full rounded-md border border-[#2E4260] bg-[#16243A] px-3 py-2 text-[#F5F3EE] focus:outline-none focus:border-[#9BCBEB]"
+          className="w-full border border-[#D8D2C2] bg-[#F4F4F0] px-3 py-2 text-[#2C3E50] focus:outline-none focus:border-[#2C3E50]"
         />
       </div>
 
       <button
         onClick={updateProfile}
-        className="mt-8 rounded-full bg-[#FF5C8A] px-6 py-2.5 text-sm font-semibold text-[#0F1B2D] hover:bg-[#ff7a9e] transition-colors"
+        className="mt-8 rounded-sm bg-[#2C3E50] px-6 py-2.5 text-sm font-semibold text-[#F4F4F0] hover:bg-[#1f2d3a] transition-colors"
       >
-        Save profile
+        File Update
       </button>
     </main>
   );

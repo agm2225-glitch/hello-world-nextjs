@@ -9,32 +9,32 @@ export default async function Header() {
   } = await supabase.auth.getUser();
 
   return (
-    <header className="w-full border-b border-[#2E4260] px-6 py-3">
+    <header className="w-full bg-[#F4F4F0] border-b-4 border-[#2C3E50] px-6 py-4">
       <div className="max-w-5xl mx-auto flex items-center justify-between">
-        <Link
-          href="/"
-          className="font-[family-name:var(--font-display)] text-lg text-[#FFD23F]"
-        >
-          Caption Rater
-        </Link>
+        <div>
+          <Link href="/" className="block text-lg font-bold tracking-tight text-[#2C3E50]">
+            Caption Rater, Inc.
+          </Link>
+          <p className="text-xs text-[#6B7280]">Memo circulated company-wide</p>
+        </div>
 
         <nav className="flex items-center gap-4 text-sm">
           {user ? (
             <>
-              <Link href="/dashboard" className="text-[#C7D6E8] hover:text-[#F5F3EE]">
+              <Link href="/dashboard" className="text-[#2C3E50] hover:underline">
                 Dashboard
               </Link>
-              <Link href="/profile" className="text-[#C7D6E8] hover:text-[#F5F3EE]">
-                Profile
+              <Link href="/profile" className="text-[#2C3E50] hover:underline">
+                Employee Profile
               </Link>
               <SignOutButton />
             </>
           ) : (
             <Link
               href="/login"
-              className="rounded-full bg-[#FF5C8A] px-4 py-1.5 text-[#0F1B2D] font-semibold hover:bg-[#ff7a9e] transition-colors"
+              className="rounded-sm bg-[#2C3E50] px-4 py-1.5 text-[#F4F4F0] font-semibold hover:bg-[#1f2d3a] transition-colors"
             >
-              Sign in
+              Clock In
             </Link>
           )}
         </nav>

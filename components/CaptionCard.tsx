@@ -20,13 +20,13 @@ export default function CaptionCard({
   upvotes,
   downvotes,
   isLoggedIn,
-  rotate = -2,
+  rotate = -1.5,
 }: Props) {
   const [isPending, startTransition] = useTransition();
 
   const handleVote = (voteType: "up" | "down") => {
     if (!isLoggedIn) {
-      alert("Sign in to vote on captions.");
+      alert("Please clock in to vote.");
       return;
     }
     startTransition(() => {
@@ -36,31 +36,37 @@ export default function CaptionCard({
 
   return (
     <div
-      className="group relative bg-[#16243A] p-3 pb-5 rounded-sm shadow-[0_10px_25px_rgba(0,0,0,0.35)] transition-transform hover:rotate-0"
+      className="group relative bg-[#F4F4F0] border border-[#D8D2C2] p-4 pb-5 shadow-[0_6px_16px_rgba(0,0,0,0.12)] transition-transform hover:rotate-0"
       style={{ transform: `rotate(${rotate}deg)` }}
     >
-      <span className="absolute -top-3 left-1/2 -translate-x-1/2 h-6 w-16 bg-[#FFD23F]/90 rotate-[-3deg] rounded-[2px]" />
+      <span className="absolute -top-2 left-6 h-5 w-14 bg-[#FFE135] rotate-[-4deg] opacity-90" />
 
-      <div className="overflow-hidden rounded-[2px] bg-[#0F1B2D]">
-        <img src={imageUrl} alt="" className="w-full aspect-square object-cover" />
+      <p className="text-[10px] uppercase tracking-widest text-[#9CA3AF] mb-2">
+        Exhibit {id.slice(0, 4)}
+      </p>
+
+      <div className="overflow-hidden border border-[#D8D2C2]">
+        <img src={imageUrl} alt="" className="w-full aspect-square object-cover grayscale-[15%]" />
       </div>
 
-      <p className="mt-4 text-[#F5F3EE] text-[15px] leading-snug">{captionText}</p>
+      <p className="mt-4 text-[#2C3E50] text-xl font-[family-name:var(--font-handwritten)] leading-snug">
+        {captionText}
+      </p>
 
       <div className="mt-4 flex items-center gap-3">
         <button
           onClick={() => handleVote("up")}
           disabled={isPending}
-          className="flex items-center gap-1.5 rounded-full border border-[#2E4260] px-3 py-1.5 text-sm text-[#C7D6E8] hover:border-[#FF5C8A] hover:text-[#FF5C8A] transition-colors disabled:opacity-50"
+          className="border-2 border-[#2E7D32] px-3 py-1 text-xs font-bold uppercase tracking-wide text-[#2E7D32] rotate-[-2deg] hover:bg-[#2E7D32] hover:text-[#F4F4F0] transition-colors disabled:opacity-50"
         >
-          👍 <span>{upvotes}</span>
+          Approved ({upvotes})
         </button>
         <button
           onClick={() => handleVote("down")}
           disabled={isPending}
-          className="flex items-center gap-1.5 rounded-full border border-[#2E4260] px-3 py-1.5 text-sm text-[#C7D6E8] hover:border-[#9BCBEB] hover:text-[#9BCBEB] transition-colors disabled:opacity-50"
+          className="border-2 border-[#C0392B] px-3 py-1 text-xs font-bold uppercase tracking-wide text-[#C0392B] rotate-[2deg] hover:bg-[#C0392B] hover:text-[#F4F4F0] transition-colors disabled:opacity-50"
         >
-          👎 <span>{downvotes}</span>
+          Rejected ({downvotes})
         </button>
       </div>
     </div>

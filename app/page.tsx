@@ -28,20 +28,24 @@ export default async function Home() {
 
   return (
     <main className="flex-1 w-full max-w-5xl mx-auto px-6 py-12">
-      <header className="mb-12 flex flex-col items-center text-center">
-        <h1 className="font-[family-name:var(--font-display)] text-5xl sm:text-6xl text-[#FFD23F] -rotate-2 leading-none">
-          Caption Rater
+      <header className="mb-12 text-center">
+        <p className="text-xs uppercase tracking-widest text-[#6B7280] mb-2">
+          Interoffice Memo &middot; To: All Staff
+        </p>
+        <h1 className="text-4xl sm:text-5xl font-bold text-[#2C3E50]">
+          The Daily Caption
         </h1>
-        <p className="mt-4 max-w-md text-[#C7D6E8]">
-          Upload a photo from campus. An AI writes a caption. You decide if it&apos;s actually funny.
+        <p className="mt-3 max-w-md mx-auto text-[#6B7280]">
+          Submit a photo from around the office. Management&apos;s AI will generate a caption.
+          Vote accordingly.
         </p>
 
         {!user && (
           <Link
             href="/login"
-            className="mt-6 inline-block rounded-full bg-[#FF5C8A] px-6 py-3 text-sm font-semibold text-[#0F1B2D] hover:bg-[#ff7a9e] transition-colors"
+            className="mt-6 inline-block rounded-sm bg-[#2C3E50] px-6 py-3 text-sm font-semibold text-[#F4F4F0] hover:bg-[#1f2d3a] transition-colors"
           >
-            Sign in with Google to upload
+            Clock in to participate
           </Link>
         )}
       </header>
@@ -49,8 +53,8 @@ export default async function Home() {
       {user && <UploadForm />}
 
       {captionsWithVotes.length === 0 ? (
-        <p className="text-center text-[#7E93AE] mt-16">
-          No captions yet. Be the first to upload a photo.
+        <p className="text-center text-[#6B7280] mt-16">
+          This conference room is empty. No submissions yet.
         </p>
       ) : (
         <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
@@ -63,7 +67,7 @@ export default async function Home() {
               upvotes={c.upvotes}
               downvotes={c.downvotes}
               isLoggedIn={!!user}
-              rotate={i % 2 === 0 ? -2 : 2}
+              rotate={i % 2 === 0 ? -1.5 : 1.5}
             />
           ))}
         </div>

@@ -1,13 +1,15 @@
 @import "tailwindcss";
 
 :root {
-  --background: #0F1B2D;
-  --foreground: #F5F3EE;
+  --background: #E8E2D5;
+  --foreground: #2C3E50;
 }
 
 body {
   background-color: var(--background);
   color: var(--foreground);
-  background-image: radial-gradient(circle, rgba(245, 243, 238, 0.05) 1px, transparent 1px);
-  background-size: 18px 18px;
+  background-image:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+    linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+  background-size: 24px 24px;
 }

@@ -38,11 +38,14 @@ export default function UploadForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="mx-auto max-w-md rounded-lg border-2 border-dashed border-[#2E4260] bg-[#16243A]/60 px-6 py-8 text-center"
+      className="mx-auto max-w-md border-2 border-dashed border-[#2C3E50]/40 bg-[#F4F4F0] px-6 py-8 text-center"
     >
+      <p className="text-xs uppercase tracking-widest text-[#9CA3AF] mb-3">
+        Submission Form 27-B
+      </p>
       <label className="block cursor-pointer">
-        <span className="text-sm text-[#C7D6E8]">
-          {file ? file.name : "Drop a photo, or click to choose one"}
+        <span className="text-sm text-[#2C3E50]">
+          {file ? file.name : "Attach photo evidence"}
         </span>
         <input
           type="file"
@@ -55,12 +58,12 @@ export default function UploadForm() {
       <button
         type="submit"
         disabled={!file || loading}
-        className="mt-5 rounded-full bg-[#FFD23F] px-6 py-2.5 text-sm font-semibold text-[#0F1B2D] hover:bg-[#ffdb63] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        className="mt-5 rounded-sm bg-[#FFE135] px-6 py-2.5 text-sm font-bold text-[#2C3E50] hover:bg-[#ffe95c] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
       >
-        {loading ? "Writing a caption..." : "Upload & Caption"}
+        {loading ? "Processing paperwork..." : "Submit for Review"}
       </button>
 
-      {error && <p className="mt-3 text-sm text-[#FF8FA3]">{error}</p>}
+      {error && <p className="mt-3 text-sm text-[#C0392B]">{error}</p>}
     </form>
   );
 }
